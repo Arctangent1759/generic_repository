@@ -1,5 +1,12 @@
 from scipy.io import loadmat
-from liblinearutil import *
+try:
+    from liblinearutil import *
+except ImportError:
+    lib_path = os.path.abspath('./liblinear')
+    sys.path.append(lib_path)
+    lib_path = os.path.abspath('./liblinear/python')
+    sys.path.append(lib_path)
+    from liblinearutil import *
 import matplotlib.pyplot as plt
 import sys
 

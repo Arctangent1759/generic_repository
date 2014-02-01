@@ -1,10 +1,13 @@
 from scipy.io import loadmat
 import os, sys
-lib_path = os.path.abspath('./liblinear')
-sys.path.append(lib_path)
-lib_path = os.path.abspath('./liblinear/python')
-sys.path.append(lib_path)
-from liblinearutil import *
+try:
+    from liblinearutil import *
+except ImportError:
+    lib_path = os.path.abspath('./liblinear')
+    sys.path.append(lib_path)
+    lib_path = os.path.abspath('./liblinear/python')
+    sys.path.append(lib_path)
+    from liblinearutil import *
 try:
     import matplotlib.pyplot as plt
     hasMatPlotLib=True
