@@ -1,7 +1,20 @@
 from scipy.io import loadmat
+import os, sys
+lib_path = os.path.abspath('./liblinear')
+sys.path.append(lib_path)
+lib_path = os.path.abspath('./liblinear/python')
+sys.path.append(lib_path)
 from liblinearutil import *
-import matplotlib.pyplot as plt
+try:
+    import matplotlib.pyplot as plt
+    hasMatPlotLib=True
+except ImportError:
+    hasMatPlotLib=False
 from q1 import extract_features
+
+if not hasMatPlotLib:
+    print "matplotlib was not found. Please install matplotlib and try again."
+    exit(1)
 
 def make_confusion(predictions, actual, size):
     assert len(predictions) == len(actual)
