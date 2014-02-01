@@ -58,7 +58,7 @@ def main(args):
             plt.title(r'Effect of Training Set Size on Error Rate')
             plt.show()
         else:
-            print "matplotlib was not found. Please install matplotlib and try again.l"
+            print "matplotlib was not found. Please install matplotlib and try again."
     elif len(args)==2 or (len(args)==3 and args[1] in ['0','1','2','3','4','5','6']):
         if len(args)==3:
             images, labels = loadmat('data/train_small.mat')['train'][0][int(args[1])][0][0]
