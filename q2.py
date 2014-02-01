@@ -29,7 +29,10 @@ def make_confusion(predictions, actual, size):
         holdit[y][x] += 1
     return holdit
 
-m = load_model('q1_svm.model')
+if len(sys.argv) == 1:
+    m = load_model("q1_svm.model")
+else:
+    m = load_model(sys.argv[1])
 
 test_images, test_labels = loadmat('data/test.mat')['test'][0][0]
 test_example_list, test_label_list = extract_features(test_images, test_labels)
