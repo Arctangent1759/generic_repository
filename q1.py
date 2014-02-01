@@ -1,6 +1,10 @@
 from scipy.io import loadmat
 from liblinearutil import *
-import matplotlib.pyplot as plt
+try:
+    import matplotlib.pyplot as plt
+    hasMatPlotLib=True
+except ImportError:
+    hasMatPlotLib=False
 import sys
 
 def extract_features(images,labels):
@@ -33,25 +37,28 @@ def testModel(model, example_list, label_list):
 
 def main(args):
     if len(args)==2 and args[1]=="plot":
-        error_vals=[]
-        n_example_vals=[]
+        if hasMatPlotLib:
+            error_vals=[]
+            n_example_vals=[]
 
-        data = loadmat('data/train_small.mat')['train'][0]
-        test_images, test_labels = loadmat('data/test.mat')['test'][0][0]
-        test_example_list, test_label_list = extract_features(test_images,test_labels)
+            data = loadmat('data/train_small.mat')['train'][0]
+            test_images, test_labels = loadmat('data/test.mat')['test'][0][0]
+            test_example_list, test_label_list = extract_features(test_images,test_labels)
 
-        for n in range(len(data)):
-            images, labels = data[n][0][0]
-            example_list, label_list = extract_features(images,labels)
-            m=train_digit_classifier(example_list,label_list)
-            error_vals.append(100.0 - testModel(m,test_example_list,test_label_list))
-            n_example_vals.append(len(labels))
+            for n in range(len(data)):
+                images, labels = data[n][0][0]
+                example_list, label_list = extract_features(images,labels)
+                m=train_digit_classifier(example_list,label_list)
+                error_vals.append(100.0 - testModel(m,test_example_list,test_label_list))
+                n_example_vals.append(len(labels))
 
-        plt.plot(n_example_vals,error_vals)
-        plt.ylabel('Error Rate on Test Set')
-        plt.xlabel('Training Set Size')
-        plt.title(r'Effect of Training Set Size on Error Rate')
-        plt.show()
+            plt.plot(n_example_vals,error_vals)
+            plt.ylabel('Error Rate on Test Set')
+            plt.xlabel('Training Set Size')
+            plt.title(r'Effect of Training Set Size on Error Rate')
+            plt.show()
+        else:
+            print "matplotlib was not found. Please install matplotlib and try again.l"
     elif len(args)==2 or (len(args)==3 and args[1] in ['0','1','2','3','4','5','6']):
         if len(args)==3:
             images, labels = loadmat('data/train_small.mat')['train'][0][int(args[1])][0][0]
