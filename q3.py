@@ -1,4 +1,6 @@
 from scipy.io import loadmat
+import os
+import sys
 try:
     from liblinearutil import *
 except ImportError:
@@ -7,8 +9,6 @@ except ImportError:
     lib_path = os.path.abspath('./liblinear/python')
     sys.path.append(lib_path)
     from liblinearutil import *
-import matplotlib.pyplot as plt
-import sys
 
 def extract_features(images,labels):
 
